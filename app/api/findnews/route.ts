@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
         livecrawl: "always",
         includeText: [websiteurl],
         numResults: 10,
+        excludeDomains: [websiteurl]
       }
     );
 

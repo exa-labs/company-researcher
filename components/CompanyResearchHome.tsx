@@ -1004,7 +1004,7 @@ export default function CompanyResearcher() {
         {/* Company Socials Section */}
           <div className="space-y-16 pt-12">
 
-          {(twitterProfileText || youtubeVideos || tiktokData || 
+          {(twitterProfileText || youtubeVideos || /* tiktokData || */
           redditPosts || githubUrl) && (
             <div className="flex items-center">
               <h2 className="text-4xl font-medium">Company Socials</h2>
@@ -1027,13 +1027,13 @@ export default function CompanyResearcher() {
               </div>
             )}
 
-            {isGenerating && tiktokData === null ? (
+            {/* {isGenerating && tiktokData === null ? (
               <TikTokSkeleton />
             ) : tiktokData && (
               <div className="opacity-0 animate-fade-up [animation-delay:200ms]">
                 <TikTokDisplay data={tiktokData} />
               </div>
-            )}
+            )} */}
 
             {isGenerating && githubUrl === null ? (
               <GitHubSkeleton />

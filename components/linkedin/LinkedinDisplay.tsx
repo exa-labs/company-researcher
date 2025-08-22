@@ -136,14 +136,14 @@ export default function LinkedInDisplay({ data }: { data: LinkedInData }) {
             maxLines={2}
             />
         )}
-        {processedData.type && (
+        {/* {processedData.type && (
             <InfoItem
             icon={<Building2 className="w-5 h-5" />}
             label="Company Type"
             value={processedData.type}
             maxLines={2}
             />
-        )}
+        )} */}
         {processedData.linkedinUrl && (
             <InfoItem
             icon={<LinkIcon className="w-5 h-5" />}
