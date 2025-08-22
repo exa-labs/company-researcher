@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         {
           text: true,
           summary: {
-            query: "Describe the company in few word. It should be very simple and explicity tell what does the company do/is. Do not include the name of the company."
+            query: "Describe what the company does in few word. It should be very simple and explicity tell what does the company do/is. Do not include the name of the company at all. Make sure never to include the name of the company in the summary."
           }
         }
       );
