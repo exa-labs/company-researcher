@@ -6,7 +6,30 @@ export const maxDuration = 60;
 
 const exa = new Exa(process.env.EXA_API_KEY as string);
 
-const FOUNDER_KEYWORDS = /\b(founder|co-founder|cofounder|founding|started|established)\b/i;
+const FOUNDER_TITLE_RE = /\b(founder|co-founder|cofounder)\b/i;
+
+function isFounderAtCompany(result: any, domain: string): boolean {
+  const domainRoot = domain.replace(/\.(com|org|net|io|ai|co)$/i, '').toLowerCase();
+
+  const entities = result.entities ?? [];
+  for (const entity of entities) {
+    const workHistory = entity?.properties?.workHistory ?? [];
+    for (const job of workHistory) {
+      const companyName = (job?.company?.name ?? '').toLowerCase();
+      const jobTitle = (job?.title ?? '').toLowerCase();
+      if (companyName.includes(domainRoot) && FOUNDER_TITLE_RE.test(jobTitle)) {
+        return true;
+      }
+    }
+  }
+
+  const title = (result.title ?? '').toLowerCase();
+  if (title.includes(domainRoot) && FOUNDER_TITLE_RE.test(title)) {
+    return true;
+  }
+
+  return false;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,10 +50,7 @@ export async function POST(req: NextRequest) {
       )
 
     const founders = result.results.filter((r: any) =>
-      r.url?.includes('/in/') &&
-      !r.url?.includes('/company/') &&
-      !r.url?.includes('/post/') &&
-      r.title && FOUNDER_KEYWORDS.test(r.title)
+      r.url?.includes('/in/') && isFounderAtCompany(r, websiteurl)
     );
 
     return NextResponse.json({ results: founders.slice(0, 3) });
