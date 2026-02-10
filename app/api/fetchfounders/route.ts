@@ -6,11 +6,15 @@ export const maxDuration = 60;
 
 const exa = new Exa(process.env.EXA_API_KEY as string);
 
-const FOUNDER_TITLE_RE = /\b(founder|co-founder|cofounder)\b/i;
+const FOUNDER_RE = /\b(founder|co-founder|cofounder)\b/i;
+const EXEC_RE = /\b(ceo|chairman|president)\b/i;
 
 function isFounderAtCompany(result: any, domain: string): boolean {
   const domainRoot = domain.replace(/\.(com|org|net|io|ai|co)$/i, '').toLowerCase();
   const domainRe = new RegExp(`\\b${domainRoot}\\b`, 'i');
+
+  let hasFounderTitle = false;
+  let hasExecTitle = false;
 
   const entities = result.entities ?? [];
   for (const entity of entities) {
@@ -18,13 +22,13 @@ function isFounderAtCompany(result: any, domain: string): boolean {
     for (const job of workHistory) {
       const companyName = job?.company?.name ?? '';
       const jobTitle = job?.title ?? '';
-      if (domainRe.test(companyName) && FOUNDER_TITLE_RE.test(jobTitle)) {
-        return true;
-      }
+      if (!domainRe.test(companyName)) continue;
+      if (FOUNDER_RE.test(jobTitle)) hasFounderTitle = true;
+      if (EXEC_RE.test(jobTitle)) hasExecTitle = true;
     }
   }
 
-  return false;
+  return hasFounderTitle || hasExecTitle;
 }
 
 export async function POST(req: NextRequest) {
