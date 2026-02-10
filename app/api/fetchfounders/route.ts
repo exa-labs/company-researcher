@@ -15,10 +15,11 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await exa.search(
-        `${websiteurl} founder's Linkedin page:`,
+        `founder of ${websiteurl}`,
         {
-          type: "keyword",
-          numResults: 2,
+          type: "auto",
+          numResults: 3,
+          category: "people" as any,
           includeDomains: ["linkedin.com"]
         }
       )
