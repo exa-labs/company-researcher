@@ -10,14 +10,15 @@ const FOUNDER_TITLE_RE = /\b(founder|co-founder|cofounder)\b/i;
 
 function isFounderAtCompany(result: any, domain: string): boolean {
   const domainRoot = domain.replace(/\.(com|org|net|io|ai|co)$/i, '').toLowerCase();
+  const domainRe = new RegExp(`\\b${domainRoot}\\b`, 'i');
 
   const entities = result.entities ?? [];
   for (const entity of entities) {
     const workHistory = entity?.properties?.workHistory ?? [];
     for (const job of workHistory) {
-      const companyName = (job?.company?.name ?? '').toLowerCase();
-      const jobTitle = (job?.title ?? '').toLowerCase();
-      if (companyName.includes(domainRoot) && FOUNDER_TITLE_RE.test(jobTitle)) {
+      const companyName = job?.company?.name ?? '';
+      const jobTitle = job?.title ?? '';
+      if (domainRe.test(companyName) && FOUNDER_TITLE_RE.test(jobTitle)) {
         return true;
       }
     }
