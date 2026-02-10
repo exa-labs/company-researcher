@@ -23,11 +23,6 @@ function isFounderAtCompany(result: any, domain: string): boolean {
     }
   }
 
-  const title = (result.title ?? '').toLowerCase();
-  if (title.includes(domainRoot) && FOUNDER_TITLE_RE.test(title)) {
-    return true;
-  }
-
   return false;
 }
 
