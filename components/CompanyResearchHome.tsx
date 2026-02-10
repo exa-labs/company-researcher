@@ -690,12 +690,7 @@ export default function CompanyResearcher() {
       }
 
       const data = await response.json();
-      // Filter out company and post URLs, only keep individual profiles
-      return data.results.filter((result: any) => 
-        !result.url.includes('/company/') && 
-        !result.url.includes('/post/') &&
-        result.url.includes('/in/')
-      );
+      return data.results;
     } catch (error) {
       console.error('Error fetching founders:', error);
       throw error;
