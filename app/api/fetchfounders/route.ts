@@ -1,9 +1,3 @@
-// app/api/fetchfounders/route.ts
-//
-// Uses Exa people category search to find company founders on LinkedIn.
-// Verifies each result against entity workHistory to ensure the person
-// actually holds a founder or exec role at the target company.
-// Written by devin-ai-integration.
 import { NextRequest, NextResponse } from 'next/server';
 import Exa from "exa-js";
 
