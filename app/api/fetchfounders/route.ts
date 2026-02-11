@@ -12,7 +12,16 @@ export const maxDuration = 60;
 const exa = new Exa(process.env.EXA_API_KEY as string);
 
 const FOUNDER_RE = /\b(founder|co-founder|cofounder)\b/i;
-const EXEC_RE = /\b(ceo|chairman)\b/i;
+const EXEC_RE = /\b(ceo|chairman|president)\b/i;
+const NON_FOUNDER_PREFIX_RE = /\b(director|executive|head|manager|lead|vp|vice)\b/i;
+
+function isLeadershipFounder(jobTitle: string): boolean {
+  if (!FOUNDER_RE.test(jobTitle)) return false;
+  const founderIdx = jobTitle.search(FOUNDER_RE);
+  const prefix = jobTitle.slice(0, founderIdx).trim();
+  if (prefix && NON_FOUNDER_PREFIX_RE.test(prefix)) return false;
+  return true;
+}
 
 function companyMatchesDomain(companyName: string, domainRoot: string): boolean {
   if (!companyName) return false;
@@ -38,7 +47,7 @@ function scoreResult(result: any, domainRoot: string): ScoredResult | null {
       const companyName = job?.company?.name ?? '';
       const jobTitle = job?.title ?? '';
       if (!companyMatchesDomain(companyName, domainRoot)) continue;
-      if (FOUNDER_RE.test(jobTitle)) isFounder = true;
+      if (isLeadershipFounder(jobTitle)) isFounder = true;
       if (EXEC_RE.test(jobTitle)) isExec = true;
     }
   }
