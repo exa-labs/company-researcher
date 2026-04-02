@@ -1,5 +1,5 @@
 # 🔎 Company Researcher
-### Powered by [Exa.ai](https://exa.ai) - The Search Engine for AI Applications
+### Powered by [Exa.ai](https://exa.ai) - The fastest and most accurate web search API for AI
 
 ![Screenshot](https://companyresearcher.exa.ai/opengraph-image.jpg)
 
