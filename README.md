@@ -110,9 +110,10 @@ Create a `.env.local` file in the root directory with the following structure:
 EXA_API_KEY=your_exa_api_key
 ANTHROPIC_API_KEY=your_anthropic_api_key
 
-# Optional - for additional features
+# Optional - for additional features (do not prefix with NEXT_PUBLIC_;
+# GitHub token is used server-side only and must not be exposed to the browser)
 YOUTUBE_API_KEY=your_youtube_api_key
-NEXT_PUBLIC_GITHUB_TOKEN=your_github_token
+GITHUB_TOKEN=your_github_token
 ```
 
 > For deployment on platforms like Vercel, add these environment variables in your platform's settings.

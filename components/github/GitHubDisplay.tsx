@@ -58,28 +58,12 @@ export default function GitHubDisplay({ githubUrl }: GitHubDisplayProps) {
         const username = githubUrl.split('/').pop();
         if (!username) throw new Error('Invalid GitHub URL');
 
-        const headers = {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-          'Accept': 'application/vnd.github.v3+json',
-        };
+        // Fetch through the server-side API route so the token stays on the server
+        const response = await fetch(`/api/github?username=${username}`);
+        if (!response.ok) throw new Error('Failed to fetch GitHub data');
+        const data = await response.json();
 
-        // Fetch profile data
-        const profileResponse = await fetch(`https://api.github.com/users/${username}`, { headers });
-        if (!profileResponse.ok) throw new Error('Failed to fetch GitHub profile');
-        const profileData = await profileResponse.json();
-
-        // Fetch repositories with sort parameter in the API URL
-        const reposResponse = await fetch(
-          `https://api.github.com/users/${username}/repos?sort=stars&direction=desc&per_page=6`,
-          { headers }
-        );
-        if (!reposResponse.ok) throw new Error('Failed to fetch repositories');
-        const reposData = await reposResponse.json();
-
-        setProfile({
-          ...profileData,
-          repositories: reposData
-        });
+        setProfile(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch GitHub data');
       } finally {
