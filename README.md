@@ -142,3 +142,4 @@ This project is powered by [Exa.ai](https://exa.ai), a powerful search engine an
 ---
 
 Built with ❤️ by team Exa
+HERON_PROD_SESSION_DELIVERY_PROBE=1
