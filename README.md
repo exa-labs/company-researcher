@@ -1,9 +1,10 @@
 # 🔎 Company Researcher
 ### Powered by [Exa.ai](https://exa.ai) - The Search Engine for AI Applications
-
-![Screenshot](https://companyresearcher.exa.ai/opengraph-image.jpg)
-
 <br>
+
+> [!NOTE]
+> This repository is out-of-scope for Exa's [Vulnerability Disclosure Program](https://exa.ai/security). Any reports made against this codebase are ineligible for bounty rewards.
+
 
 ## 🎯 What is Company Researcher?
 
