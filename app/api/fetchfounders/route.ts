@@ -8,6 +8,12 @@ const exa = new Exa(process.env.EXA_API_KEY as string);
 
 export async function POST(req: NextRequest) {
   try {
+    const origin = req.headers.get('origin') ?? req.headers.get('referer');
+    const host = req.headers.get('host');
+    if (!host || !origin || !origin.includes(host)) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { websiteurl } = await req.json();
 
     if (!websiteurl) {
